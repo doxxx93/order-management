@@ -16,13 +16,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Product {
 
     private final Long seq;
-
     private String name;
-
     private String details;
-
     private int reviewCount;
-
     private final LocalDateTime createAt;
 
     public Product(String name, String details) {
@@ -31,14 +27,8 @@ public class Product {
 
     public Product(Long seq, String name, String details, int reviewCount, LocalDateTime createAt) {
         checkArgument(isNotEmpty(name), "name must be provided");
-        checkArgument(
-            name.length() >= 1 && name.length() <= 50,
-            "name length must be between 1 and 50 characters"
-        );
-        checkArgument(
-            isEmpty(details) || details.length() <= 1000,
-            "details length must be less than 1000 characters"
-        );
+        checkArgument(name.length() >= 1 && name.length() <= 50, "name length must be between 1 and 50 characters");
+        checkArgument(isEmpty(details) || details.length() <= 1000, "details length must be less than 1000 characters");
 
         this.seq = seq;
         this.name = name;
@@ -49,19 +39,13 @@ public class Product {
 
     public void setName(String name) {
         checkArgument(isNotEmpty(name), "name must be provided");
-        checkArgument(
-            name.length() >= 1 && name.length() <= 50,
-            "name length must be between 1 and 50 characters"
-        );
+        checkArgument(name.length() >= 1 && name.length() <= 50, "name length must be between 1 and 50 characters");
 
         this.name = name;
     }
 
     public void setDetails(String details) {
-        checkArgument(
-            isEmpty(details) || details.length() <= 1000,
-            "details length must be less than 1000 characters"
-        );
+        checkArgument(isEmpty(details) || details.length() <= 1000, "details length must be less than 1000 characters");
 
         this.details = details;
     }
@@ -105,13 +89,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("seq", seq)
-            .append("name", name)
-            .append("details", details)
-            .append("reviewCount", reviewCount)
-            .append("createAt", createAt)
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("seq", seq).append("name", name)
+                .append("details", details).append("reviewCount", reviewCount).append("createAt", createAt).toString();
     }
 
     static public class Builder {
@@ -158,13 +137,7 @@ public class Product {
         }
 
         public Product build() {
-            return new Product(
-                seq,
-                name,
-                details,
-                reviewCount,
-                createAt
-            );
+            return new Product(seq, name, details, reviewCount, createAt);
         }
     }
 

@@ -3,6 +3,7 @@ package com.github.prgrms.products;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.github.prgrms.errors.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    @Transactional
+    public void addReviewCount(Long id) {
+        Product product = findById(id).orElseThrow(() -> new NotFoundException("Could not found product for " + id));
+        productRepository.addReviewCount(id, product.getReviewCount() + 1);
+    }
 }

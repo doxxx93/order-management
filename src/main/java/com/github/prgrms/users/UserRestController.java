@@ -7,7 +7,6 @@ import com.github.prgrms.errors.UnauthorizedException;
 import com.github.prgrms.security.Jwt;
 import com.github.prgrms.security.JwtAuthentication;
 import com.github.prgrms.security.JwtAuthenticationToken;
-import com.github.prgrms.utils.ApiUtils;
 import com.github.prgrms.utils.ApiUtils.ApiResult;
 import javax.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +31,7 @@ public class UserRestController {
     private final UserService userService;
 
     public UserRestController(Jwt jwt, AuthenticationManager authenticationManager,
-        UserService userService) {
+                              UserService userService) {
         this.jwt = jwt;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
@@ -43,7 +42,7 @@ public class UserRestController {
     ) throws UnauthorizedException {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new JwtAuthenticationToken(request.getPrincipal(), request.getCredentials())
+                    new JwtAuthenticationToken(request.getPrincipal(), request.getCredentials())
             );
             final User user = (User) authentication.getDetails();
             final String token = user.newJwt(jwt, authentication.getAuthorities().stream()
@@ -57,16 +56,16 @@ public class UserRestController {
     }
 
     @GetMapping(path = "me")
-    public ApiUtils.ApiResult<UserDto> me(
-        // JwtAuthenticationTokenFilter 에서 JWT 값을 통해 사용자를 인증한다.
-        // 사용자 인증이 정상으로 완료됐다면 @AuthenticationPrincipal 어노테이션을 사용하여 인증된 사용자 정보(JwtAuthentication)에 접근할 수 있다.
-        @AuthenticationPrincipal JwtAuthentication authentication
+    public ApiResult<UserDto> me(
+            // JwtAuthenticationTokenFilter 에서 JWT 값을 통해 사용자를 인증한다.
+            // 사용자 인증이 정상으로 완료됐다면 @AuthenticationPrincipal 어노테이션을 사용하여 인증된 사용자 정보(JwtAuthentication)에 접근할 수 있다.
+            @AuthenticationPrincipal JwtAuthentication authentication
     ) {
         return success(
-            userService.findById(authentication.id)
-                .map(UserDto::new)
-                .orElseThrow(
-                    () -> new NotFoundException("Could nof found user for " + authentication.id))
+                userService.findById(authentication.id)
+                        .map(UserDto::new)
+                        .orElseThrow(
+                                () -> new NotFoundException("Could nof found user for " + authentication.id))
         );
     }
 
