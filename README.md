@@ -1,3 +1,8 @@
+# 프로그래머스 주문관리 API 서버 개발
+
+https://school.programmers.co.kr/skill_check_assignments/232
+
+
 주문관리 API 서버를 개발해야 합니다. 다행히 전임자가 `Apache Maven`을 활용해 필요한 라이브러리 설정, 프로젝트 기본 구조 셋업, spring-security 기반으로 JWT 인증 및 인가 처리 부분까지 완성해 두었습니다.
 
 개발 요건을 잘 확인하고, 주문 관린 API 서버의 나머지 부분을 완성해주세요.
